@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D&D Adventure</title>
+  <link rel="stylesheet" href="dnd-game.css">
+</head>
+<body>
+  <main class="game-shell">
+    <div class="top-bar">
+      <a class="back-link" href="../../arcade.html">← Back to Arcade</a>
+      <h1>D&amp;D Adventure</h1>
+    </div>
+
+    <section class="intro-card">
+      <p class="subtitle">Choose a hero, pick a class, and survive as many battles as you can.</p>
+
+      <div class="setup-grid">
+        <div class="setup-field">
+          <label for="playerName">Hero Name</label>
+          <input type="text" id="playerName" placeholder="Enter your character name">
+        </div>
+
+        <div class="setup-field">
+          <label for="playerClass">Class</label>
+          <select id="playerClass">
+            <option value="warrior">Warrior</option>
+            <option value="paladin">Paladin</option>
+            <option value="mage">Mage</option>
+            <option value="rogue">Rogue</option>
+          </select>
+        </div>
+
+        <div class="setup-actions">
+          <button id="startGameBtn">Start Adventure</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="battle-grid">
+      <article class="stat-card player-card">
+        <h2 id="playerDisplayName">Hero</h2>
+        <p><strong>Class:</strong> <span id="playerClassDisplay">Warrior</span></p>
+        <p><strong>HP:</strong> <span id="playerHp">100</span> / <span id="playerMaxHp">100</span></p>
+        <div class="hp-bar">
+          <div id="playerHpFill" class="hp-fill"></div>
+        </div>
+        <p><strong>Defense:</strong> <span id="playerDefense">0</span></p>
+        <p><strong>Potions:</strong> <span id="playerPotions">3</span></p>
+        <p><strong>Gold:</strong> <span id="playerGold">0</span></p>
+        <p><strong>Wins:</strong> <span id="playerWins">0</span></p>
+      </article>
+
+      <article class="stat-card enemy-card">
+        <h2 id="enemyName">Goblin Raider</h2>
+        <p><strong>HP:</strong> <span id="enemyHp">80</span> / <span id="enemyMaxHp">80</span></p>
+        <div class="hp-bar enemy-hp-bar">
+          <div id="enemyHpFill" class="hp-fill enemy-hp-fill"></div>
+        </div>
+        <p><strong>Power:</strong> <span id="enemyPower">Wild Slash</span></p>
+        <p><strong>Threat:</strong> <span id="enemyThreat">1</span></p>
+      </article>
+    </section>
+
+    <section class="controls-card">
+      <div class="button-row">
+        <button id="attackBtn" disabled>Attack</button>
+        <button id="defendBtn" disabled>Defend</button>
+        <button id="specialBtn" disabled>Special</button>
+        <button id="healBtn" disabled>Heal</button>
+        <button id="runBtn" disabled>Run</button>
+        <button id="restartBtn">Restart</button>
+      </div>
+
+      <div class="adventure-row">
+        <button id="caveBtn" disabled>Explore Cave</button>
+        <button id="dungeonBtn" disabled>Enter Dungeon</button>
+        <button id="tavernBtn" disabled>Visit Tavern</button>
+        <button id="shopBtn" disabled>Visit Shop</button>
+      </div>
+    </section>
+
+    <section class="log-card">
+      <h3>Battle Log</h3>
+      <div id="battleLog" class="battle-log">
+        Enter your hero name, choose a class, and start the adventure.
+      </div>
+    </section>
+  </main>
+
+  <script src="dnd-game.js"></script>
+</body>
+</html>
