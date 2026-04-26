@@ -2,8 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const session = require('express-session');
-const bcrypt = require('bcrypt');
-const cors = require('cors');
+const bcrypt = require("bcryptjs");const cors = require('cors');
 const db = require('./arcade.db.js');
 
 const app = express();
