@@ -1,9 +1,14 @@
-const BACKEND_URL = 'http://localhost:3000';
+const BACKEND_URL = 'https://arcade-backend-l2kx.onrender.com';
 
 const loginForm = document.getElementById('loginForm');
 const statusMessage = document.getElementById('statusMessage');
 const guestBtn = document.getElementById('guestBtn');
 const createAccountBtn = document.getElementById('createAccountBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const signedInBanner = document.getElementById('signedInBanner');
+const signedInUser = document.getElementById('signedInUser');
+const loginPanelTitle = document.getElementById('loginPanelTitle');
+const loginPanelText = document.getElementById('loginPanelText');
 const themeButtons = document.querySelectorAll('.theme-switch');
 const joystick = document.querySelector('.joystick');
 const snakeLeaderboardPreview = document.getElementById('snakeLeaderboardPreview');
@@ -19,11 +24,34 @@ function setStatus(message, isError = false) {
 }
 
 function saveCurrentUser(username) {
-  if (!username) {
+  if (!username || !username.trim() || username.trim() === 'Player') {
     return;
   }
 
-  localStorage.setItem('arcadeCurrentUser', username);
+  localStorage.setItem('arcadeCurrentUser', username.trim());
+}
+
+function updateSignedInUi(username) {
+  if (!signedInBanner || !signedInUser || !loginPanelTitle || !loginPanelText) {
+    return;
+  }
+
+  const cleanUsername = typeof username === 'string' ? username.trim() : '';
+  const hasRealUser = cleanUsername !== '' && cleanUsername !== 'Player';
+
+  if (hasRealUser) {
+    signedInBanner.classList.remove('hidden');
+    signedInBanner.style.display = 'flex';
+    signedInUser.textContent = cleanUsername;
+    loginPanelTitle.textContent = 'Welcome Back';
+    loginPanelText.textContent = 'You are already signed in. Jump back into the arcade or log out below.';
+  } else {
+    signedInBanner.classList.add('hidden');
+    signedInBanner.style.display = 'none';
+    signedInUser.textContent = 'Player';
+    loginPanelTitle.textContent = 'Log In';
+    loginPanelText.textContent = 'Sign in to access your saved games, scores, and profile.';
+  }
 }
 
 function goToArcade() {
@@ -190,6 +218,7 @@ async function handleLogin(event) {
     });
 
     saveCurrentUser(result.user?.username || email.split('@')[0]);
+    updateSignedInUi(result.user?.username || email.split('@')[0]);
     setStatus('Entering arcade...');
     goToArcade();
   } catch (error) {
@@ -236,6 +265,7 @@ async function handleCreateAccount() {
     });
 
     saveCurrentUser(result.user?.username || username);
+    updateSignedInUi(result.user?.username || username);
     setStatus('Account created. Entering arcade...');
     goToArcade();
   } catch (error) {
@@ -248,14 +278,27 @@ async function handleCreateAccount() {
 }
 
 async function checkExistingSession() {
+  const storedUser = localStorage.getItem('arcadeCurrentUser') || '';
+
   try {
     const result = await requestJson('/me', { method: 'GET' });
 
-    if (result.user?.username) {
+    if (result.user?.username && result.user.username.trim()) {
       saveCurrentUser(result.user.username);
+      updateSignedInUi(result.user.username);
+    } else if (storedUser && storedUser.trim() && storedUser.trim() !== 'Player') {
+      updateSignedInUi(storedUser);
+    } else {
+      localStorage.removeItem('arcadeCurrentUser');
+      updateSignedInUi('');
     }
   } catch (_error) {
-    // Ignore session check failures on first load.
+    if (storedUser && storedUser.trim() && storedUser.trim() !== 'Player') {
+      updateSignedInUi(storedUser);
+    } else {
+      localStorage.removeItem('arcadeCurrentUser');
+      updateSignedInUi('');
+    }
   }
 }
 
@@ -276,7 +319,24 @@ if (createAccountBtn) {
 if (guestBtn) {
   guestBtn.addEventListener('click', function () {
     localStorage.setItem('arcadeCurrentUser', 'Guest');
+    updateSignedInUi('Guest');
     goToArcade();
+  });
+}
+
+if (logoutBtn) {
+  logoutBtn.addEventListener('click', async function () {
+    try {
+      await requestJson('/logout', { method: 'POST' });
+    } catch (_error) {
+      // Ignore logout request failures and still clear local state.
+    }
+
+    localStorage.removeItem('arcadeCurrentUser');
+    sessionStorage.removeItem('arcadeCurrentUser');
+    updateSignedInUi('');
+    setStatus('Logged out.');
+    window.location.reload();
   });
 }
 
@@ -321,5 +381,6 @@ if (savedTheme) {
   document.body.classList.add(`theme-${savedTheme}`);
 }
 
+updateSignedInUi(localStorage.getItem('arcadeCurrentUser') || '');
 checkExistingSession();
 loadLeaderboardPreview();
