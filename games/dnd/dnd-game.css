@@ -1,0 +1,249 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #f4f7ff;
+  background:
+    radial-gradient(circle at top, rgba(155, 92, 255, 0.2), transparent 30%),
+    linear-gradient(180deg, #111b3a, #070b1a 65%);
+  padding: 24px;
+}
+
+.game-shell {
+  width: min(1000px, 100%);
+  margin: 0 auto;
+}
+
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.back-link {
+  color: #39ffea;
+  text-decoration: none;
+  font-weight: bold;
+  border: 1px solid rgba(57, 255, 234, 0.25);
+  border-radius: 14px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.back-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.subtitle {
+  margin: 0 0 18px;
+  color: #b9c4e3;
+}
+
+.intro-card,
+.stat-card,
+.controls-card,
+.log-card {
+  background: rgba(8, 16, 40, 0.88);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 22px;
+  box-shadow: 0 0 18px rgba(57, 255, 234, 0.18), 0 0 42px rgba(255, 92, 207, 0.12);
+  padding: 22px;
+}
+
+.setup-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.setup-field {
+  display: grid;
+  gap: 8px;
+}
+
+.setup-field label {
+  font-weight: bold;
+}
+
+.setup-field input,
+.setup-field select {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+  font-size: 1rem;
+}
+
+.setup-field select option {
+  color: #09111f;
+}
+
+.setup-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.battle-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.stat-card h2 {
+  margin-top: 0;
+  margin-bottom: 14px;
+}
+
+.stat-card p {
+  margin: 10px 0;
+}
+
+.hp-bar {
+  width: 100%;
+  height: 14px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+  margin: 10px 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.hp-fill {
+  height: 100%;
+  width: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #39ffea, #93ffea);
+  transition: width 0.25s ease;
+}
+
+.enemy-hp-fill {
+  background: linear-gradient(90deg, #ff5ccf, #ff9de6);
+}
+
+.hit-flash {
+  animation: hitFlash 0.3s ease;
+}
+
+@keyframes hitFlash {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 18px rgba(57, 255, 234, 0.18), 0 0 42px rgba(255, 92, 207, 0.12);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 2px rgba(255, 92, 207, 0.55), 0 0 24px rgba(255, 92, 207, 0.25);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 18px rgba(57, 255, 234, 0.18), 0 0 42px rgba(255, 92, 207, 0.12);
+  }
+}
+
+.player-card {
+  border-color: rgba(57, 255, 234, 0.25);
+}
+
+.enemy-card {
+  border-color: rgba(255, 92, 207, 0.25);
+}
+
+.controls-card {
+  margin-top: 22px;
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.adventure-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+button {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  background: linear-gradient(90deg, #39ffea, #93ffea, #ffe066);
+  color: #09111f;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+#specialBtn {
+  background: linear-gradient(90deg, #ff5ccf, #ff9de6, #ffe066);
+}
+
+#shopBtn {
+  background: linear-gradient(90deg, #ffe066, #ffd24d, #ffb347);
+}
+
+.log-card {
+  margin-top: 22px;
+}
+
+.log-card h3 {
+  margin-top: 0;
+}
+
+.battle-log {
+  min-height: 180px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 16px;
+  padding: 16px;
+  line-height: 1.6;
+  color: #dbe7ff;
+}
+
+.log-entry {
+  margin-bottom: 10px;
+}
+
+.log-entry:last-child {
+  margin-bottom: 0;
+}
+
+@media (max-width: 720px) {
+  body {
+    padding: 16px;
+  }
+
+  .setup-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .battle-grid {
+    grid-template-columns: 1fr;
+  }
+}
