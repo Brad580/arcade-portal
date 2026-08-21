@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0a0a0a;
+    color: #39ffea;
+    font-family: Arial, sans-serif;
+  }
+  
+  .game-wrapper {
+    text-align: center;
+  }
+  
+  h1 {
+    margin-bottom: 8px;
+  }
+  
+  .instructions {
+    margin-bottom: 18px;
+    color: #dbe7ff;
+  }
+  
+  canvas {
+    background: #111;
+    border: 3px solid #39ffea;
+    box-shadow: 0 0 18px rgba(57, 255, 234, 0.2);
+  }
+  
+  .scoreboard {
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    font-size: 20px;
+  }
