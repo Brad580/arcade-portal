@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>B-rad's rad Arcade Portal</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="sun"></div>
+  <div class="grid-floor"></div>
+
+  <main class="page">
+    <section class="shell" id="loginScreen">
+      <div class="hero">
+        <div>
+          <div class="badge">Player One Ready</div>
+          <h1>
+            <span class="highlight-pink">The</span>
+            <span class="highlight-cyan">Arcade</span><br />
+            Of Fun
+          </h1>
+          <p>
+            Ready to test your skills? Select a game below, unless you're scared...
+          </p>
+        </div>
+
+        <div class="arcade-card">
+          <button class="primary-btn" type="button" data-enter-arcade>Enter Arcade</button>
+
+          <div class="leaderboard-panel">
+            <div class="screen-title">Top Players</div>
+            <div class="leaderboard-columns">
+              <div class="leaderboard-box">
+                <div class="leaderboard-heading">Snake</div>
+                <div id="snakeLeaderboardPreview" class="leaderboard-list">No Snake scores yet.</div>
+              </div>
+
+              <div class="leaderboard-box">
+                <div class="leaderboard-heading">D&amp;D</div>
+                <div id="dndLeaderboardPreview" class="leaderboard-list">No D&amp;D runs yet.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="controls">
+            <div class="buttons">
+              <button class="btn-dot theme-switch" type="button" data-theme="pink" aria-label="Pink theme"></button>
+              <button class="btn-dot theme-switch" type="button" data-theme="yellow" aria-label="Yellow theme"></button>
+              <button class="btn-dot theme-switch theme-blue-dot" type="button" data-theme="blue" aria-label="Blue theme"></button>
+            </div>
+            <div class="joystick" aria-label="Random theme selector" role="button" tabindex="0"></div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="login-panel">
+        <h2 id="loginPanelTitle">Log In</h2>
+        <p class="subtext" id="loginPanelText">
+          Sign in to access your saved games, scores, and profile.
+        </p>
+
+        <div id="signedInBanner" class="signed-in-banner hidden">
+          <div>
+            <span class="signed-in-label">Signed in as</span>
+            <strong id="signedInUser">Player</strong>
+          </div>
+          <button id="logoutBtn" class="ghost-btn" type="button">Log Out</button>
+        </div>
+
+        <form id="loginForm" class="login-form">
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" placeholder="player@arcade.com" required />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" type="password" placeholder="Enter password" required />
+          </div>
+
+          <button class="primary-btn" type="submit">Enter Arcade</button>
+          <div id="statusMessage" class="status"></div>
+        </form>
+
+        <div class="divider">or</div>
+
+        <div class="secondary-actions">
+          <button id="guestBtn" class="ghost-btn" type="button">Continue as Guest</button>
+          <button id="createAccountBtn" class="ghost-btn" type="button">Create Account</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

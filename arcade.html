@@ -1,0 +1,281 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arcade Hub</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-1: #070b1a;
+      --bg-2: #111b3a;
+      --panel: rgba(8, 16, 40, 0.88);
+      --cyan: #39ffea;
+      --pink: #ff5ccf;
+      --yellow: #ffe066;
+      --text: #f4f7ff;
+      --muted: #b9c4e3;
+      --border: rgba(255, 255, 255, 0.14);
+      --shadow: 0 0 18px rgba(57, 255, 234, 0.18), 0 0 42px rgba(255, 92, 207, 0.12);
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top, rgba(155, 92, 255, 0.25), transparent 30%),
+        linear-gradient(180deg, var(--bg-2), var(--bg-1) 60%);
+      overflow-x: hidden;
+      position: relative;
+      padding: 32px 20px;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.035),
+        rgba(255,255,255,0.035) 1px,
+        transparent 2px,
+        transparent 4px
+      );
+      pointer-events: none;
+      opacity: 0.35;
+    }
+
+    .page {
+      width: min(1200px, 100%);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      border: 1px solid rgba(57, 255, 234, 0.35);
+      border-radius: 999px;
+      color: var(--cyan);
+      font-size: 0.85rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      width: fit-content;
+      background: rgba(57, 255, 234, 0.08);
+    }
+
+    h1 {
+      font-size: clamp(2.2rem, 5vw, 4.2rem);
+      line-height: 0.95;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      text-shadow: 0 0 14px rgba(255, 92, 207, 0.35);
+    }
+
+    .highlight-cyan {
+      color: var(--cyan);
+    }
+
+    .highlight-pink {
+      color: var(--pink);
+    }
+
+    .home-link {
+      color: var(--cyan);
+      text-decoration: none;
+      font-weight: bold;
+      border: 1px solid rgba(57, 255, 234, 0.25);
+      border-radius: 14px;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.04);
+      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .home-link:hover {
+      transform: translateY(-2px);
+      border-color: rgba(57, 255, 234, 0.55);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-panel {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+      margin-bottom: 24px;
+    }
+
+    .hero-panel p {
+      color: var(--muted);
+      max-width: 760px;
+      line-height: 1.7;
+      font-size: 1rem;
+      margin-top: 14px;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin-bottom: 14px;
+    }
+
+    .games-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 18px;
+    }
+
+    .game-card {
+      border: 1px solid var(--border);
+      background: var(--panel);
+      backdrop-filter: blur(10px);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .game-tag {
+      width: fit-content;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--yellow);
+      background: rgba(255, 224, 102, 0.08);
+      border: 1px solid rgba(255, 224, 102, 0.2);
+      padding: 6px 10px;
+      border-radius: 999px;
+    }
+
+    .game-card h3 {
+      font-size: 1.3rem;
+    }
+
+    .game-card p {
+      color: var(--muted);
+      line-height: 1.6;
+      flex-grow: 1;
+    }
+
+    .play-link {
+      display: inline-block;
+      text-decoration: none;
+      color: #09111f;
+      background: linear-gradient(90deg, var(--cyan), #93ffea, var(--yellow));
+      font-weight: bold;
+      padding: 12px 16px;
+      border-radius: 14px;
+      box-shadow: 0 10px 24px rgba(57,255,234,0.24);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .play-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(57,255,234,0.32);
+    }
+
+    .soon-link {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--cyan);
+      border: 1px solid rgba(57,255,234,0.25);
+      background: rgba(255,255,255,0.04);
+      font-weight: bold;
+      padding: 12px 16px;
+      border-radius: 14px;
+    }
+
+    @media (max-width: 640px) {
+      body {
+        padding: 20px 14px;
+      }
+
+      .hero-panel,
+      .game-card {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="top-bar">
+      <div class="brand">
+        <div class="badge">Player Hub</div>
+        <h1>
+          <span class="highlight-pink">Retro</span>
+          <span class="highlight-cyan">Arcade</span><br>
+          Library
+        </h1>
+      </div>
+
+      <a class="home-link" href="Index.html">← Back to Login</a>
+    </header>
+
+    <section class="hero-panel">
+      <h2 class="section-title">Choose Your Game</h2>
+      <p>
+        Pick your poison and good luck!
+      </p>
+    </section>
+
+    <section class="games-grid">
+      <article class="game-card">
+        <span class="game-tag">Playable Now</span>
+        <h3>Snake</h3>
+        <p>
+          Your first working arcade game. Eat food, grow longer, beat your high score, and try not to crash.
+        </p>
+        <a class="play-link" href="games/snake/snake.html">Play Snake</a>
+      </article>
+
+      <article class="game-card">
+        <span class="game-tag">Playable Now</span>
+        <h3>D&amp;D Adventure</h3>
+        <p>
+          An endless fantasy adventure with class selection, turn-based combat, caves, dungeons, taverns, shops, gold, and special abilities.
+        </p>
+        <a class="play-link" href="games/dnd/dnd-game.html">Play D&amp;D Adventure</a>
+      </article>
+
+      <article class="game-card">
+        <span class="game-tag">Coming Soon</span>
+        <h3>More Games</h3>
+        <p>
+          Add future ideas here like Pong, Breakout, a space shooter, card battle mini-games, or puzzle games.
+        </p>
+        <a class="soon-link" href="#">Expand Arcade</a>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
